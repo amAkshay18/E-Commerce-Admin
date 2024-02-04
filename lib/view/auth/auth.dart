@@ -43,7 +43,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(error.message ?? 'Authentication faild'),
+            content: Text(error.message ?? 'Authentication failed'),
           ),
         );
       } else if (error.code == 'invalid-email') {
@@ -52,7 +52,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(error.message ?? 'Authentication faild'),
+            content: Text(error.message ?? 'Authentication failed'),
           ),
         );
       }
@@ -68,7 +68,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Gardenia',
+              'LeafLoom',
               style: TextStyle(
                   color: Colors.green,
                   fontSize: 20,
