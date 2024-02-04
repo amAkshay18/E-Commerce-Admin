@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leafloom_admin/bloc/product_bloc/add_product_bloc.dart';
 import 'package:leafloom_admin/firebase_options.dart';
-// import 'package:leafloom_admin/firebase_options.dart';
 import 'package:leafloom_admin/view/auth/splash_screen.dart';
 
 void main() async {
@@ -26,7 +25,6 @@ class MyApp extends StatelessWidget {
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
-        // home: EarningsScreen(),
       ),
     );
   }

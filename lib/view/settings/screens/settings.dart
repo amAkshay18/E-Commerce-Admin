@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:leafloom_admin/view/home/home.dart';
-import 'package:leafloom_admin/view/settings/screens/aboutus.dart';
+import 'package:leafloom_admin/view/settings/screens/about_us.dart';
 import 'package:leafloom_admin/view/settings/screens/pricacy_policy.dart';
-import 'package:leafloom_admin/view/settings/screens/terms_conditions.dart';
+import 'package:leafloom_admin/view/settings/screens/terms_and_conditions.dart';
 
 class ScreenSettings extends StatelessWidget {
   const ScreenSettings({super.key});
@@ -12,12 +11,23 @@ class ScreenSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        // centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
-          'Account',
-          style: TextStyle(color: Colors.black),
+          'Settings',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       firebase.signOut();
+        //     },
+        //     icon: const Icon(
+        //       Icons.logout_sharp,
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ],
       ),
       body: const ProfileBody(),
     );
@@ -31,76 +41,74 @@ class ProfileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 28.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(26),
+    return Column(
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 28.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(26),
+              ),
+              elevation: 9,
+              child: Container(
+                decoration: const BoxDecoration(
+                  // gradient: gcolor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25),
+                  ),
                 ),
-                elevation: 9,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: gcolor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
+                height: 240,
+                width: 350,
+                child: Column(
+                  children: [
+                    AccountTile(
+                      icon: Icons.privacy_tip,
+                      name: 'Privacy and Policy',
+                      voidCallback: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const PrivacyPolicyDialog();
+                          },
+                        );
+                      },
                     ),
-                  ),
-                  height: 240,
-                  width: 350,
-                  child: Column(
-                    children: [
-                      AccountTile(
-                        icon: Icons.privacy_tip,
-                        name: 'Privacy and Policy',
-                        voidCallback: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const PrivacyPolicyDialog();
-                            },
-                          );
-                        },
-                      ),
-                      AccountTile(
-                        icon: Icons.file_copy,
-                        name: 'Terms and Conditions',
-                        voidCallback: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return TermsAndConditionsDialog();
-                            },
-                          );
-                        },
-                      ),
-                      AccountTile(
-                        icon: CupertinoIcons.info_circle_fill,
-                        name: 'About Us',
-                        voidCallback: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const AboutUsDialog();
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                    AccountTile(
+                      icon: Icons.file_copy,
+                      name: 'Terms and Conditions',
+                      voidCallback: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const TermsAndConditionsDialog();
+                          },
+                        );
+                      },
+                    ),
+                    AccountTile(
+                      icon: CupertinoIcons.info_circle_fill,
+                      name: 'About Us',
+                      voidCallback: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AboutUsDialog();
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 160,
-          ),
-          const SizedBox(height: 150),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 160,
+        ),
+        const SizedBox(height: 150),
+      ],
     );
   }
 }

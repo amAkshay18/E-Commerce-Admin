@@ -4,10 +4,8 @@ import 'package:leafloom_admin/view/auth/auth.dart';
 import 'package:leafloom_admin/view/earnings/earnings.dart';
 import 'package:leafloom_admin/view/home/widget/home_card.dart';
 import 'package:leafloom_admin/view/orders/screens/orders.dart';
-import 'package:leafloom_admin/view/paymentmethord/payment_methords.dart';
 import 'package:leafloom_admin/view/settings/screens/settings.dart';
 import 'package:leafloom_admin/view/total_stocks.dart/total_stocks.dart';
-import 'package:leafloom_admin/view/users/users_screen.dart';
 import 'package:leafloom_admin/widget/common_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,24 +15,24 @@ class HomeScreen extends StatelessWidget {
     ScreenEarnings(),
     const ScreenStocks(),
     const OrdersScreen(),
-    const PaymentMethordsScreen(),
-    const UsersScreen(),
+    // const PaymentMethordsScreen(),
+    // const UsersScreen(),
   ];
   final List<IconData> _screenIcons = [
     Icons.shopping_cart_outlined,
     Icons.money,
     Icons.shop,
     Icons.card_giftcard,
-    Icons.attach_money,
-    Icons.person
+    // Icons.attach_money,
+    // Icons.person
   ];
   final List<String> _screenName = [
     'Add product',
     'Earnings',
     'Stocks',
     'Orders',
-    'Payment Methords',
-    'User Screen'
+    // 'Payment Methords',
+    // 'User Screen'
   ];
   @override
   Widget build(BuildContext context) {
@@ -43,11 +41,11 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: const Text(
-            'Choose What you want',
+            'LeafLoom-Admin',
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
           ),
-          centerTitle: true,
+          // centerTitle: true,
           actions: [
             IconButton(
               onPressed: () {
@@ -67,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                 firebase.signOut();
               },
               icon: const Icon(
-                Icons.logout_sharp,
+                Icons.logout_rounded,
                 color: Colors.white,
               ),
             ),

@@ -70,15 +70,31 @@ class _ScreenLoginState extends State<ScreenLogin> {
             const Text(
               'LeafLoom',
               style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                color: Colors.green,
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const Text('Please Log-in or Sign-up to continue'),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            const Text(
+              'Welcome! Please Log-in or Sign-up to continue',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
                 textCapitalization: TextCapitalization.none,
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
@@ -86,7 +102,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   if (value == null ||
                       !value.contains('@') ||
                       value.trim().isEmpty) {
-                    return 'Please enter valid email';
+                    return 'Please enter a valid email';
                   }
                   return null;
                 },
@@ -95,12 +111,15 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 },
               ),
             ),
+            // const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'password',
-                ),
+                decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    )),
                 textCapitalization: TextCapitalization.none,
                 obscureText: true,
                 autocorrect: false,
@@ -115,15 +134,20 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 },
               ),
             ),
-            const SizedBox(
-              height: 25,
-            ),
-            ElevatedButton(
-              onPressed: _submit,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+            // const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: _submit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  minimumSize: const Size(double.infinity, 55),
+                ),
+                child: Text(_isLogin ? 'Log in' : 'Sign up'),
               ),
-              child: Text(_isLogin ? 'Log in' : 'Sign up'),
             ),
             if (!_isAuthenticating)
               TextButton(
@@ -136,7 +160,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   _isLogin ? 'Create Account' : 'I already have an account',
                   style: const TextStyle(color: Colors.black),
                 ),
-              )
+              ),
           ],
         ),
       ),
