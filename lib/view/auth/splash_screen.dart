@@ -40,7 +40,7 @@ class SplashScreen extends StatelessWidget {
                 baseColor: const Color.fromARGB(255, 70, 244, 54),
                 highlightColor: Colors.yellow,
                 child: const Text(
-                  'Gardenia',
+                  'LeafLoom',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 40.0,
