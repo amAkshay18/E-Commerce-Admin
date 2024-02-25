@@ -192,6 +192,7 @@ class Discription extends StatelessWidget {
                     .collection('Products')
                     .doc(id)
                     .delete();
+                // ignore: use_build_context_synchronously
                 Navigator.of(ctx).pop();
               },
             ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:leafloom_admin/models/order_model.dart';
 import 'package:leafloom_admin/view/home/home.dart';
 import 'package:leafloom_admin/view/orders/widget/order_card.dart';
-import 'package:leafloom_admin/view/orders/widget/order_detiles.dart';
+import 'package:leafloom_admin/view/orders/widget/order_details.dart';
 
 class CompletedOrders extends StatelessWidget {
   const CompletedOrders({super.key});

@@ -123,6 +123,6 @@ class HomeScreen extends StatelessWidget {
 }
 
 const LinearGradient gcolor = LinearGradient(colors: [
-  Color.fromARGB(255, 109, 219, 236),
-  Color.fromARGB(255, 162, 245, 175),
+  Color.fromARGB(255, 245, 126, 80),
+  Color.fromARGB(255, 125, 238, 149),
 ], begin: Alignment.topLeft);

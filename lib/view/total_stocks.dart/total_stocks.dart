@@ -50,7 +50,7 @@ class StockList extends StatelessWidget {
         }
 
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         List<DocumentSnapshot> documents = snapshot.data!.docs;

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:leafloom_admin/models/order_model.dart';
 import 'package:leafloom_admin/view/orders/widget/order_card.dart';
-import 'package:leafloom_admin/view/orders/widget/order_detiles.dart';
+import 'package:leafloom_admin/view/orders/widget/order_details.dart';
 
 class CanceledOrders extends StatelessWidget {
   const CanceledOrders({super.key});
