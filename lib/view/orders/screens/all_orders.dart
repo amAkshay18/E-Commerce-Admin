@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:leafloom_admin/models/order_model.dart';
@@ -41,10 +43,10 @@ class AllOrderScreen extends StatelessWidget {
               child: Text('No  orders.'),
             );
           } else {
-            List<OrderModel> orders = snapshot.data!.docs
-                .map((doc) =>
-                    OrderModel.fromJson(doc.data() as Map<String, dynamic>))
-                .toList();
+            List<OrderModel> orders = snapshot.data!.docs.map((doc) {
+              var item = doc.data() as Map<String, dynamic>;
+              return OrderModel.fromJson(item);
+            }).toList();
 
             return ListView.builder(
               itemCount: orders.length,

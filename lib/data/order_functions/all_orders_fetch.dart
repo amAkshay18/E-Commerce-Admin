@@ -4,7 +4,6 @@ import 'package:leafloom_admin/models/order_model.dart';
 
 Future<List<OrderModel>> fetchOrder() async {
   List<OrderModel> productList = [];
-
   try {
     var orderCollectionSnapshot =
         await FirebaseFirestore.instance.collection('Order').get();
@@ -22,6 +21,5 @@ Future<List<OrderModel>> fetchOrder() async {
   } catch (e) {
     debugPrint("Error fetching order===+++++++====: $e");
   }
-
   return productList;
 }

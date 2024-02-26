@@ -59,7 +59,7 @@ class OrdersScreen extends StatelessWidget {
               kHeight20,
               OrderCards(
                 size: size,
-                name: 'Canceled Orders',
+                name: 'Cancelled Orders',
                 nav: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const CanceledOrders(),
