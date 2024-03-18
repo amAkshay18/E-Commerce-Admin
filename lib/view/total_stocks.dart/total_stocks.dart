@@ -66,6 +66,15 @@ class StockList extends StatelessWidget {
           return false;
         }).toList();
 
+        // If there are no products and the filter is 'stockOut', display 'No products' text
+        if (filter == 'stockOut' && filteredDocuments.isEmpty) {
+          return const Center(
+            child: Text(
+              'No products',
+              style: TextStyle(fontSize: 18.0),
+            ),
+          );
+        }
         return ListView.builder(
           itemCount: filteredDocuments.length,
           itemBuilder: (context, index) {

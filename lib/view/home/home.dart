@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:leafloom_admin/view/add_products/screen/added_products.dart';
 import 'package:leafloom_admin/view/auth/auth.dart';
 import 'package:leafloom_admin/view/earnings/earnings.dart';
 import 'package:leafloom_admin/view/home/widget/home_card.dart';
 import 'package:leafloom_admin/view/orders/screens/orders.dart';
+import 'package:leafloom_admin/view/product/screen/all_products.dart';
 import 'package:leafloom_admin/view/settings/screens/settings.dart';
 import 'package:leafloom_admin/view/total_stocks.dart/total_stocks.dart';
 import 'package:leafloom_admin/widget/common_widget.dart';
@@ -11,7 +11,7 @@ import 'package:leafloom_admin/widget/common_widget.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final List<Widget> _screens = [
-    const ScreenAddedProducts(),
+    const ScreenAllProducts(),
     ScreenEarnings(),
     const ScreenStocks(),
     const OrdersScreen(),
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
     // Icons.person
   ];
   final List<String> _screenName = [
-    'Add product',
+    'Products',
     'Earnings',
     'Stocks',
     'Orders',

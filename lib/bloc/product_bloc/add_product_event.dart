@@ -4,6 +4,8 @@ class AddProductEvent {}
 
 class AddImageEvent extends AddProductEvent {}
 
+class ProductFetchEvent extends AddProductEvent {}
+
 class FirebaseAddEvent extends AddProductEvent {
   BuildContext context;
   ProductClass product;
@@ -13,3 +15,11 @@ class FirebaseAddEvent extends AddProductEvent {
 }
 
 class FirebaseProductEvent extends AddProductEvent {}
+
+class ProductEditEvent extends AddProductEvent {
+  BuildContext context;
+  ProductClass product;
+  String imageFile;
+  ProductEditEvent(
+      {required this.context, required this.product, required this.imageFile});
+}

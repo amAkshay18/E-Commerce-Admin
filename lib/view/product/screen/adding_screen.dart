@@ -6,22 +6,38 @@ import 'package:leafloom_admin/bloc/product_bloc/add_product_bloc.dart';
 import 'package:leafloom_admin/models/product_model.dart';
 
 class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({Key? key}) : super(key: key);
-
+  const AddProductScreen({super.key, this.product});
+  final ProductClass? product;
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final _form = GlobalKey<FormState>();
-  File? pickedImageFile;
+  // File? pickedImageFile;
+
+  String _imageUrl = '';
   String dropdownValue = 'Indoor';
-  final _priceControllor = TextEditingController();
-  final _nameControllor = TextEditingController();
-  final _quantityControllor = TextEditingController();
-  final _discriptionControllor = TextEditingController();
+  initializeControllers() {
+    final product = widget.product;
+    _imageUrl = product == null ? '' : product.imageUrl ?? '';
+    setState(() {});
+    _priceControllor =
+        TextEditingController(text: product == null ? '' : product.price);
+    _nameControllor =
+        TextEditingController(text: product == null ? '' : product.name);
+    _quantityControllor =
+        TextEditingController(text: product == null ? '' : product.quantity);
+    _descriptionControllor =
+        TextEditingController(text: product == null ? '' : product.description);
+  }
+
+  late final TextEditingController _priceControllor;
+  late final TextEditingController _nameControllor;
+  late final TextEditingController _quantityControllor;
+  late final TextEditingController _descriptionControllor;
   String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-  late File? path;
+  // File? path;
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
   }
@@ -30,6 +46,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void initState() {
     super.initState();
     initializeFirebase();
+    initializeControllers();
   }
 
   @override
@@ -55,8 +72,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   builder: (context, state) {
                     return GestureDetector(
                       onTap: () {
-                        BlocProvider.of<AddProductBloc>(context)
-                            .add(AddImageEvent());
+                        context.read<AddProductBloc>().add(AddImageEvent());
                       },
                       child: Container(
                         height: 200,
@@ -65,14 +81,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                         child: BlocBuilder<AddProductBloc, AddProductState>(
+                          buildWhen: (previous, current) =>
+                              current is AddImageState,
                           builder: (context, state) {
                             if (state is AddImageState) {
-                              path = state.imagestate;
+                              _imageUrl = state.imagestate.path;
                               return Image.file(
                                 state.imagestate,
                                 fit: BoxFit.cover,
                               );
                             } else {
+                              if (_imageUrl.isNotEmpty) {
+                                return Image.network(_imageUrl);
+                              }
                               return Center(
                                 child: Icon(
                                   Icons.add_a_photo,
@@ -113,7 +134,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     if (value == null || value.trim().isEmpty) {
                       return 'Please enter price';
                     }
-
                     return null;
                   },
                 ),
@@ -166,7 +186,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
-                  controller: _discriptionControllor,
+                  controller: _descriptionControllor,
                   maxLines: 4,
                   decoration: const InputDecoration(
                     labelText: 'Description',
@@ -180,52 +200,81 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_form.currentState!.validate()) {
-                      // int parsedPrice =
-                      //     int.tryParse(_priceControllor.text.trim()) ?? 0;
-                      // int parsedquantity =
-                      //     int.tryParse(_quantityControllor.text.trim()) ?? 0;
-                      _form.currentState!.save();
-                      final productModel = ProductClass(
-                        description: _discriptionControllor.text.trim(),
-                        category: dropdownValue,
-                        price: _priceControllor.text.trim(),
-                        name: _nameControllor.text.trim(),
-                        quantity: _quantityControllor.text.trim(),
-                        id: uniqueFileName,
-                        searchName: _nameControllor.text.toLowerCase().trim(),
-                      );
-
-                      BlocProvider.of<AddProductBloc>(context).add(
-                        FirebaseAddEvent(
-                          imageFile: path!,
-                          context: context,
-                          product: productModel,
-                        ),
-                      );
-                      // print('triggerd');
-                      if (!context.mounted) {
-                        return;
-                      }
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.all(16),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: const Text('Add Product'),
-                ),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BlocConsumer<AddProductBloc, AddProductState>(
+        listener: (context, state) {
+          if (state is ProductEditSuccessState) {
+            context.read<AddProductBloc>().add(ProductFetchEvent());
+            Navigator.pop(context);
+          } else if (state is AddProductDataState) {
+            context.read<AddProductBloc>().add(ProductFetchEvent());
+            Navigator.of(context).pop();
+          }
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                if (_form.currentState!.validate()) {
+                  // int parsedPrice =
+                  //     int.tryParse(_priceControllor.text.trim()) ?? 0;
+                  // int parsedquantity =
+                  //     int.tryParse(_quantityControllor.text.trim()) ?? 0;
+                  _form.currentState!.save();
+                  final productModel = ProductClass(
+                    description: _descriptionControllor.text.trim(),
+                    category: dropdownValue,
+                    price: _priceControllor.text.trim(),
+                    name: _nameControllor.text.trim(),
+                    quantity: _quantityControllor.text.trim(),
+                    id: widget.product == null
+                        ? uniqueFileName
+                        : widget.product!.id,
+                    searchName: _nameControllor.text.toLowerCase().trim(),
+                  );
+                  if (widget.product == null) {
+                    context.read<AddProductBloc>().add(
+                          FirebaseAddEvent(
+                            imageFile: File(_imageUrl),
+                            context: context,
+                            product: productModel,
+                          ),
+                        );
+                  } else {
+                    // final image = path == null ? _imageUrl : path!.path;
+                    context.read<AddProductBloc>().add(
+                          ProductEditEvent(
+                            imageFile: _imageUrl,
+                            context: context,
+                            product: productModel,
+                          ),
+                        );
+                  }
+                  // print('triggerd');
+                  // if (!context.mounted) {
+                  //   return;
+                  // }
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding: const EdgeInsets.all(16),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              child: state is ProductEditLoadingState
+                  ? const CircularProgressIndicator()
+                  : const Text('Add Product'),
+            ),
+          );
+        },
       ),
     );
   }

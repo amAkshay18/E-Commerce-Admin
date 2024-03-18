@@ -1,23 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:leafloom_admin/view/add_products/screen/editing_screen.dart';
+import 'package:leafloom_admin/models/product_model.dart';
 
 class ProductDiscription extends StatefulWidget {
-  const ProductDiscription(
-      {super.key,
-      required this.name,
-      required this.price,
-      required this.category,
-      required this.discription,
-      required this.img,
-      required this.id});
-  final String name;
-  final String price;
-  final String category;
-  final String discription;
-  final String img;
-  final String id;
-
+  const ProductDiscription({super.key, required this.product});
+  final ProductClass product;
   @override
   State<ProductDiscription> createState() => _ProductDiscriptionState();
 }
@@ -32,12 +19,12 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
           title: const Text('Product discription'),
         ),
         body: Discription(
-            id: widget.id,
-            img: widget.img,
-            name: widget.name,
-            price: widget.price,
-            category: widget.category,
-            discription: widget.discription),
+            id: widget.product.id!,
+            img: widget.product.imageUrl!,
+            name: widget.product.name!,
+            price: widget.product.price!,
+            category: widget.product.category!,
+            discription: widget.product.description!),
       ),
     );
   }
@@ -113,60 +100,67 @@ class Discription extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Expanded(child: Text(discription)),
               ),
-              ButtonBar(
-                alignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      padding: const EdgeInsets.all(10),
-                      minimumSize: const Size(150, 50),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ScreenEditing(
-                            id: id,
-                          );
-                        },
-                      );
-                    },
-                    child: const Text(
-                      'Edit',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      padding: const EdgeInsets.all(10),
-                      minimumSize: const Size(150, 50),
-                    ),
-                    onPressed: () async {
-                      _showMyDialog(context: context);
-                    },
-                    child: const Text(
-                      'Delete',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  )
-                ],
-              )
+              // ButtonBar(
+              //   alignment: MainAxisAlignment.center,
+              //   children: [
+              //     ElevatedButton(
+              //       style: ElevatedButton.styleFrom(
+              //         backgroundColor: Colors.black,
+              //         padding: const EdgeInsets.all(10),
+              //         minimumSize: const Size(150, 50),
+              //       ),
+              //       onPressed: () {
+              //         // Navigator.push(
+              //         //       context,
+              //         //       MaterialPageRoute(
+              //         //           builder: (context) => EditProductScreen(
+              //         //                 product: data[index],
+              //         //               )));
+              //         showDialog(
+              //           context: context,
+              //           builder: (context) {
+              //             return ScreenEditing(
+              //               id: id,
+              //             );
+              //           },
+              //         );
+              //         log('666666666666666666666666666666666666');
+              //       },
+              //       child: const Text(
+              //         'Edit',
+              //         style: TextStyle(
+              //           color: Colors.green,
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       width: 20,
+              //     ),
+              //     ElevatedButton(
+              //       style: ElevatedButton.styleFrom(
+              //         backgroundColor: Colors.black,
+              //         padding: const EdgeInsets.all(10),
+              //         minimumSize: const Size(150, 50),
+              //       ),
+              //       onPressed: () async {
+              //         _showMyDialog(context: context);
+              //       },
+              //       child: const Text(
+              //         'Delete',
+              //         style: TextStyle(
+              //           color: Colors.red,
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       height: 60,
+              //     )
+              //   ],
+              // )
             ],
           );
         },
