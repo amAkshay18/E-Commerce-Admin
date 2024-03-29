@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:leafloom_admin/view/home/home.dart';
 
 final firebase = FirebaseAuth.instance;
 
@@ -30,6 +31,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
         // ignore: unused_local_variable
         final userCredential = await firebase.signInWithEmailAndPassword(
             email: _email, password: _password);
+        if (userCredential.user!.uid == "IasRwj88x3PQM45OZcOkl5bgTx03") {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen(),
+              ),
+              (route) => false);
+        }
       } else {
         final userCredential = await firebase.createUserWithEmailAndPassword(
             email: _email, password: _password);
@@ -75,9 +84,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
+
             const Text(
               'Welcome! Please Log-in or Sign-up to continue',
               style: TextStyle(
@@ -134,7 +141,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 },
               ),
             ),
-            // const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
